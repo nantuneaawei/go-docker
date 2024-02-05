@@ -1,13 +1,9 @@
 FROM alpine:latest
 
-RUN apk --no-cache add nginx
-
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-COPY . /app
+RUN apk --no-cache add git go nginx postgresql-client
 
 WORKDIR /app
 
-RUN go build -o main .
+COPY nginx/nginx.conf /etc/nginx/nginx.conf
 
 CMD ["nginx", "-g", "daemon off;"]

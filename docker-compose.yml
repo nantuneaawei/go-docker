@@ -1,0 +1,24 @@
+version: '3'
+services:
+  go-app:
+    build: .
+    image: go-image
+    ports:
+      - "8080:80"  # 映射 Go 應用程式的端口
+
+  nginx:
+    build: .
+    image: nginx-image
+    ports:
+      - "80:80"  # 映射 Nginx 的端口
+    depends_on:
+      - go-app  # 依賴 Go 應用程式容器
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: jacky
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: go-docker
+    ports:
+      - "5432:5432"  # 映射 PostgreSQL 的端口
